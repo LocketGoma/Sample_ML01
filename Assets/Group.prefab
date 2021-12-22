@@ -444,9 +444,10 @@ MonoBehaviour:
   targetTransform: {fileID: 7466979234530606945}
   moveSpeed: 3.9
   successMaterial: {fileID: 2100000, guid: db3bd3b7c652a004ebab18347a80fc0c, type: 2}
+  timeOutMaterial: {fileID: 2100000, guid: f868d4dedd50c554190056f5b62431a7, type: 2}
   failMaterial: {fileID: 2100000, guid: dc112aaf005992c46a756dcd7dfd905d, type: 2}
   floorRenderer: {fileID: 7466979235267953157}
-  maxSearchTimer: 15
+  maxSearchTimer: 5
 --- !u!114 &7466979234421612008
 MonoBehaviour:
   m_ObjectHideFlags: 0

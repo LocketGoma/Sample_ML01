@@ -11,6 +11,7 @@ public class MoveToGoalAgent : Agent
     [SerializeField] private float moveSpeed;
 
     [SerializeField] private Material successMaterial;
+    [SerializeField] private Material timeOutMaterial;
     [SerializeField] private Material failMaterial;
     [SerializeField] private MeshRenderer floorRenderer;
 
@@ -32,6 +33,7 @@ public class MoveToGoalAgent : Agent
         {
             SetReward(-10f);
             transform.localPosition = Vector3.zero;
+            StopAllCoroutines();
             EndEpisode();
         }
     }
@@ -39,6 +41,8 @@ public class MoveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
         base.OnEpisodeBegin();
+        Debug.Log("Epside Start");
+        //StartCoroutine("LifeTimer");
         transform.localPosition = Vector3.zero;      //³ªÁß¿¡ ·£´ýÀ¸·Î ¹Ù²ã¸Ô¾îµµ µÊ.
     }
 
@@ -75,6 +79,8 @@ public class MoveToGoalAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
+        StopAllCoroutines();
+
         if (other.gameObject.tag == "Wall")
         {
             floorRenderer.material = failMaterial;
@@ -85,6 +91,18 @@ public class MoveToGoalAgent : Agent
             floorRenderer.material = successMaterial;
             SetReward(10f);
         }
+        EndEpisode();
+    }
+
+
+    IEnumerator LifeTimer()
+    {
+        yield return new WaitForSeconds(maxSearchTimer);
+
+        Debug.Log("timeout");
+
+        floorRenderer.material = timeOutMaterial;
+        SetReward(-1f);
         EndEpisode();
     }
 }
